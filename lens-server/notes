@@ -1,0 +1,11 @@
+sudo apt update
+sudo apt install ubuntu-desktop -y
+sudo apt install tightvncserver
+sudo apt install gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal
+
+vncserver
+sudo apt-get install lxde -y
+sudo apt-get install xrdp -y
+sudo passwd ubuntu
+
+sudo snap install kontena-lens --classic
