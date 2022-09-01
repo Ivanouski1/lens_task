@@ -62,4 +62,4 @@ sudo helm repo add stable https://charts.helm.sh/stable
 
 # NFS for clients
 sudo apt update
-sudo apt-get install nfs-common
+sudo apt-get install nfs-common -y
