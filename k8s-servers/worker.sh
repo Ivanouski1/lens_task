@@ -38,4 +38,4 @@ sudo apt-mark hold kubelet kubeadm kubectl
 
 # NFS for clients
 sudo apt update
-sudo apt-get install nfs-common
+sudo apt-get install nfs-common -y
