@@ -35,10 +35,30 @@ sudo apt-get update
 sudo apt-get install -y kubelet=1.23.0-00 kubeadm=1.23.0-00 kubectl=1.23.0-00
 sudo apt-mark hold kubelet kubeadm kubectl
 
+# Initialize the Cluster
+sudo kubeadm init --kubernetes-version 1.23.0 --v=5 #--pod-network-cidr 192.168.0.0/16 
 
-kubeadm token create --print-join-command
-kubectl create deployment node-hello --image=gcr.io/google-samples/node-hello:1.0 --port=8080
-kubectl expose deploy node-hello --name=svc-node-hello --port=8080 --target-port=8080 --type=NodePort
+
+USER=ubuntu
+
+sudo mkdir -p /home/$USER/.kube
+sudo cp -i /etc/kubernetes/admin.conf /home/$USER/.kube/config
+sudo chown $(id -u):$(id -g) /home/$USER/.kube/config
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+sudo chmod +r /home/$USER/.kube/config
+
+#Command fot join nodes to the master,does after deploy manual
+# kubeadm token create --print-join-command
+
+# Git
+sudo apt-get install git
+
+# Initialize Helm
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+sudo chmod +x get_helm.sh
+./get_helm.sh
+sudo helm repo add stable https://charts.helm.sh/stable 
+
 
 # NFS for clients
 sudo apt update
