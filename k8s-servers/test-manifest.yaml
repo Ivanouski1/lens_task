@@ -38,13 +38,13 @@ spec:
             - name: PROVISIONER_NAME
               value: k8s-share/nfs-external-provisioner
             - name: NFS_SERVER
-              value: 172.31.28.42
+              value: 3.82.207.113
             - name: NFS_PATH
               value: /home/k8s_share
       volumes:
         - name: nfs-client-root
           nfs:
-            server: 172.31.28.42
+            server: 3.82.207.113
             path: /home/k8s_share
 
 ---
