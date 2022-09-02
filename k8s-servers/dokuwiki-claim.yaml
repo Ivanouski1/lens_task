@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: test-claim
+  name: dokuwiki-claim
 spec:
   storageClassName: nfs-client
   accessModes:

@@ -1,0 +1,55 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-cluster-issuer
+spec:
+  acme:
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    email: andrewi13@yandex.ru
+    privateKeySecretRef:
+      name: letsencrypt-cluster-issuer-key
+    solvers:
+      - http01:
+          ingress:
+            class: nginx
+
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - ec2-3-227-245-252.compute-1.amazonaws.com
+    secretName: letsencrypt-cluster-issuer-key
+  rules:
+    - host: ec2-3-227-245-252.compute-1.amazonaws.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service: svc-dokuwiki-nodeport
+                name: 
+                port:
+                  number: 8080
+
+---
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dokuwiki-cert
+  namespace: default
+spec:
+  dnsNames:
+    - ec2-3-227-245-252.compute-1.amazonaws.com
+  secretName: letsencrypt-cluster-issuer-key
+  issuerRef:
+    name: letsencrypt-cluster-issuer
+    kind: ClusterIssuer

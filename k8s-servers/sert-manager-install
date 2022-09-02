@@ -1,0 +1,4 @@
+curl -LO https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
+kubectl create ns cert-manager
+kubectl apply -f cert-manager.yaml
+
